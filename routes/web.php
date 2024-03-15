@@ -18,11 +18,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('user.home');
+Route::prefix('/')->middleware(['auth', 'isUser'])->group(function () {
+   Route::get('buku', [HomeController::class, 'buku'])->name('user.buku');
+   Route::get('buku/{id}', [HomeController::class, 'detailbuku'])->name('user.detailbuku');
+});
 
 Auth::routes();
 
-Route::view('/petugas', 'petugas.dashboard')->name('petugas');
-Route::resource('buku', BukuController::class)->middleware(['auth', 'cekPetugas']);
-Route::resource('users', UserController::class)->middleware(['auth', 'cekPetugas']);
-Route::resource('kategori', KategoriController::class)->middleware(['auth', 'cekPetugas']);
+Route::prefix('petugas')->group(function () {
+   Route::view('/', 'petugas.dashboard')->name('petugas');
+   Route::resource('/buku', BukuController::class)->middleware(['auth', 'cekPetugas']);
+   Route::resource('/users', UserController::class)->middleware(['auth', 'cekPetugas']);
+   Route::resource('/kategori', KategoriController::class)->middleware(['auth', 'cekPetugas']);
+});

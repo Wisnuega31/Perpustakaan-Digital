@@ -30,7 +30,18 @@ class BukuController extends Controller
      */
     public function store(Request $request)
     {
-        Buku::create($request->all());
+        $cover = $request->file('cover');
+        $namaCover = $request->judul . "_" . date('ymd-His') . "." . $cover->getClientOriginalExtension();
+        $cover->move('coverBuku', $namaCover);
+        Buku::create([
+            'judul' => $request->judul,
+            'penulis' => $request->penulis,
+            'penerbit' => $request->penerbit,
+            'tahun_terbit' => $request->tahun_terbit,
+            'stok' => $request->stok,
+            'cover' => $namaCover
+
+        ]);
         return redirect()->route('buku.index')->with('pesan', 'Data Buku Berhasil Ditambahkan');
     }
 

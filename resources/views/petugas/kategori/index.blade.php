@@ -13,7 +13,7 @@
                         <div class="col-4">
                             <div class="card">
                                 <div class="card-body">
-                                    <form action="{{ url($url ?? 'kategori') }}" method="POST">
+                                    <form action="{{ url($url ?? 'petugas/kategori') }}" method="POST">
                                         @method($method)
                                         @csrf
                                         <div class="mb-3">

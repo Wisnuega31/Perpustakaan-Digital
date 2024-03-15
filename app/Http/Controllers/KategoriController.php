@@ -55,7 +55,7 @@ class KategoriController extends Controller
         return view('petugas.kategori.index', [
             'dataKategori' => Kategori::paginate(10),
             'kategori' => Kategori::findOrFail($id),
-            'url' => 'kategori/' . $id,
+            'url' => 'petugas/kategori/' . $id,
             'method' => 'PATCH'
         ]);
     }

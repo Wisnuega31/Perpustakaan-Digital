@@ -10,14 +10,9 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts -->
-    {{-- <link rel="dns-prefetch" href="//fonts.bunny.net"> --}}
-    {{-- <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet"> --}}
     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-    <link href="/assets/css/app.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/icon/bootstrap-icons.min.css">
     @yield('style')
-    <!-- Scripts -->
-    {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
 </head>
 
 <body>
@@ -37,34 +32,28 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         @if (Auth::user())
-                            @if (Auth::user()->role == 'admin' || Auth::user()->role == 'petugas')
+                            @if ((Auth::user() && Auth::user()->role == 'admin') || Auth::user()->role == 'petugas')
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="{{ url('petugas') }}">home</a>
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link active" aria-current="page"
-                                        href="{{ route('buku.index') }}">Buku</a>
+                                        href="{{ url('petugas/buku') }}">Buku</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('users.index') }}">Users</a>
+                                    <a class="nav-link" href="{{ url('petugas/users') }}">Users</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('kategori.index') }}">Kategori</a>
+                                    <a class="nav-link" href="{{ url('petugas/kategori') }}">Kategori</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="">Laporan</a>
                                 </li>
                             @else
+                                @include('layouts.navigationuser')
                             @endif
                         @else
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="{{ route('buku.index') }}">Home</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">Kategori</a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                </ul>
-                            </li>
+                            @include('layouts.navigationuser')
                         @endif
                     </ul>
 
@@ -91,14 +80,12 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="">
                                         @csrf
+                                        <button type="submit" class="dropdown-item">
+                                            {{ __('Logout') }}
+                                        </button>
                                     </form>
                                 </div>
                             </li>
