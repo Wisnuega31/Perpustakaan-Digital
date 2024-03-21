@@ -20,4 +20,16 @@ class Buku extends Model
     {
         return $this->belongsToMany(Kategori::class, 'kategori_relasis');
     }
+    public function koleksi(): HasMany
+    {
+        return $this->hasMany(Koleksi::class);
+    }
+    public function ulasan(): HasMany
+    {
+        return $this->hasMany(Ulasan::class);
+    }
+    public function peminjaman(): HasMany
+    {
+        return $this->hasMany(Peminjaman::class);
+    }
 }

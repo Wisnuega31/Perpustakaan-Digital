@@ -11,10 +11,7 @@ class Kategori extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-    public function KategoriRelasi(): HasMany
-    {
-        return $this->hasMany(KategoriRelasi::class);
-    }
+    
     public function buku(): BelongsToMany
     {
         return $this->belongsToMany(Buku::class, 'kategori_relasis');

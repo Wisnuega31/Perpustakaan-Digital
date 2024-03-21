@@ -24,9 +24,11 @@
                             </div>
                             <div class="col">
                                 <label for="kategori" class="form-label ">Kategori</label>
-                                <select id="kategori"name="kategori" class="form-select">
-                                    <option selected>Choose...</option>
-                                    <option value=""></option>
+                                <select id="kategori" name="kategori" class="form-select">
+                                    {{-- <option selected>Pilih Kategori</option> --}}
+                                    @foreach ($kategori as $item)
+                                    <option value="{{$item->id}}">{{$item->nama_kategori}}</option>
+                                    @endforeach
                                 </select>
                                 @error('kategori')
                                     <span class="invalid-feedback" role="alert">

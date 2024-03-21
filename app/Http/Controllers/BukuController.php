@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Buku;
+use App\Models\Kategori;
+use App\Models\KategoriRelasi;
 use Illuminate\Http\Request;
 
 class BukuController extends Controller
@@ -22,7 +24,9 @@ class BukuController extends Controller
      */
     public function create()
     {
-        return view('petugas.buku.create');
+        return view('petugas.buku.create', [
+            'kategori' => Kategori::all()
+        ]);
     }
 
     /**
@@ -33,7 +37,7 @@ class BukuController extends Controller
         $cover = $request->file('cover');
         $namaCover = $request->judul . "_" . date('ymd-His') . "." . $cover->getClientOriginalExtension();
         $cover->move('coverBuku', $namaCover);
-        Buku::create([
+        $buku = Buku::create([
             'judul' => $request->judul,
             'penulis' => $request->penulis,
             'penerbit' => $request->penerbit,
@@ -41,6 +45,10 @@ class BukuController extends Controller
             'stok' => $request->stok,
             'cover' => $namaCover
 
+        ]);
+        KategoriRelasi::create([
+            'buku_id' => $buku->id,
+            'kategori_id' => $request->kategori,
         ]);
         return redirect()->route('buku.index')->with('pesan', 'Data Buku Berhasil Ditambahkan');
     }

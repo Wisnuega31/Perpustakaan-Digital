@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Buku;
+use App\Models\Koleksi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -21,7 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('pengguna.dashboard',[
+        return view('pengguna.dashboard', [
             'dataBuku' => Buku::paginate(12)
         ]);
     }
@@ -31,10 +33,23 @@ class HomeController extends Controller
             'dataBuku' => Buku::all()
         ]);
     }
-    public function detailBuku($id){
-        return view('pengguna.detailbuku',[
+    public function detailBuku($id)
+    {
+        return view('pengguna.detailbuku', [
             'detailBuku' => Buku::find($id)
         ]);
     }
-
+    public function like($id)
+    {
+        // ddd(Auth::user());
+        if (Koleksi::where('buku_id', $id) && Koleksi::where('user_id', Auth::user()->id)) {
+            return back()->with('isLike', 'bi-heart-fill');
+        } else {
+            Koleksi::create([
+                'buku_id' => $id,
+                'user_id' => Auth::user()->id
+            ]);
+            return back()->with('pesan', 'Buku di tambahkan ke favorite');
+        }
+    }
 }

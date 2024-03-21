@@ -15,22 +15,54 @@
                 </div>
             </div>
         </div>
+    </section>
+    <section class="container">
         <div class="row gap-4 mx-auto ">
             @foreach ($dataBuku as $item)
-                <a href="{{ route('user.detailbuku', $item->id) }}" class="card col-2 p-0 text-decoration-none "
-                    style="width: 10rem;">
-                    <img src="/coverBuku/{{ $item->cover }}" class="card-img-top" alt="...">
+                <div class="card col-3 p-0 text-decoration-none z-1" style="width: 12rem;">
+                    <div class="position-relative">
+                        <form action="{{ route('user.like', $item->id) }}" method="post">
+                            @csrf
+                            <button type="submit"
+                                class="btn btn-light m-2 position-absolute bottom-0 end-0 rounded-5 z-3 ">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </form>
+                        <img src="/coverBuku/{{ $item->cover }}" class="card-img-top object-fit-cover overflow-hidden"
+                            alt="coverBuku" style="height:13rem">
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title m-0 fs-4">
                             <span>{{ $item->judul }}</span>
                         </h5>
                         <p class="card-text">{{ $item->penulis }} | 4</p>
+                        <div class="d-flex justify-content-end ">
+                            <a href="{{ route('user.like', $item->id) }}" class="btn btn-primary  rounded-1">Pinjam</i></a>
+                        </div>
                     </div>
-                </a>
+                </div>
             @endforeach
         </div>
-        <footer>
-            ini footer
-        </footer>
+        <div class="d-flex justify-content-center ">
+            <a href="{{ route('user.buku') }}" class="btn btn-primary btn-sm my-4">See More</a>
+        </div>
     </section>
+    <div class="container mt-5">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+            <div class="col-md-4 d-flex align-items-center">
+                <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+                    <svg class="bi" width="30" height="24">
+                        <use xlink:href="#bootstrap" />
+                    </svg>
+                </a>
+                <span class="mb-3 mb-md-0 text-body-secondary">&copy; 2024 Company, Inc</span>
+            </div>
+
+            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+                <li class="ms-3"><a class="text-body-secondary" href="#"><i class="bi bi-twitter"></i></a></li>
+                <li class="ms-3"><a class="text-body-secondary" href="#"><i class="bi bi-instagram"></i></a></li>
+                <li class="ms-3"><a class="text-body-secondary" href="#"><i class="bi bi-youtube"></i></a></li>
+            </ul>
+        </footer>
+    </div>
 @endsection

@@ -27,7 +27,7 @@
                                     <th scope="row">1</th>
                                     <td>{{ $item->judul }}</td>
                                     <td>
-                                        @foreach ($item->kategori as $kategori)
+                                        @foreach ($item->Kategori as $kategori)
                                             <span>{{ $kategori->nama_kategori }}</span>
                                         @endforeach
                                     </td>
